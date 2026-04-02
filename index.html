@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Калининград — 80 лет</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --amber: #C8860A;
+    --amber-light: #E9A825;
+    --cream: #F5EFE0;
+    --dark: #0E0D0A;
+    --mid: #1C1A14;
+    --muted: #7A7260;
+    --gold: #D4AF37;
+    --rust: #8B3A1E;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Montserrat', sans-serif;
+    background: var(--dark);
+    color: var(--cream);
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.35;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    text-align: center;
+    padding: 2rem 1.5rem 4rem;
+    overflow: hidden;
+  }
+
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 30%, rgba(200,134,10,0.18) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(139,58,30,0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 80% 70%, rgba(200,134,10,0.10) 0%, transparent 60%),
+      var(--dark);
+  }
+
+  .hero__amber-line {
+    position: absolute;
+    bottom: 0;
+    left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--amber), var(--gold), var(--amber), transparent);
+  }
+
+  .hero__badge {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--amber-light);
+    border: 1px solid rgba(200,134,10,0.4);
+    padding: 0.45rem 1.2rem;
+    border-radius: 2rem;
+    margin-bottom: 2rem;
+    position: relative;
+    animation: fadeDown 1s ease both;
+    backdrop-filter: blur(4px);
+  }
+
+  .hero__year {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 28vw, 16rem);
+    font-weight: 900;
+    line-height: 0.85;
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(200,134,10,0.6);
+    position: relative;
+    animation: fadeUp 1s ease 0.2s both;
+    letter-spacing: -0.02em;
+  }
+
+  .hero__year span {
+    display: block;
+    color: var(--amber);
+    -webkit-text-stroke: 0;
+    font-size: clamp(2rem, 10vw, 5.5rem);
+    font-style: italic;
+    letter-spacing: 0.01em;
+    margin-top: 0.1em;
+  }
+
+  .hero__subtitle {
+    font-size: clamp(0.85rem, 3vw, 1.15rem);
+    font-weight: 300;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,239,224,0.65);
+    margin-top: 1.5rem;
+    max-width: 380px;
+    line-height: 1.8;
+    animation: fadeUp 1s ease 0.4s both;
+  }
+
+  .hero__scroll {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    animation: fadeUp 1s ease 1s both;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* ── AMBER HISTORY STRIP ── */
+  .amber-strip {
+    background: var(--amber);
+    padding: 1.2rem 1.5rem;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .amber-strip__track {
+    display: flex;
+    gap: 3rem;
+    white-space: nowrap;
+    animation: marquee 25s linear infinite;
+  }
+
+  .amber-strip__item {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--dark);
+    flex-shrink: 0;
+  }
+
+  .amber-strip__dot {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    background: var(--dark);
+    border-radius: 50%;
+    vertical-align: middle;
+    margin: 0 1rem;
+  }
+
+  /* ── SECTIONS ── */
+  section { padding: 5rem 1.5rem; }
+
+  .section-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--amber);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 1px;
+    background: var(--amber);
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 8vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  h2 em {
+    font-style: italic;
+    color: var(--amber);
+  }
+
+  p {
+    font-size: 0.9rem;
+    line-height: 1.9;
+    color: rgba(245,239,224,0.65);
+    max-width: 560px;
+  }
+
+  /* ── ABOUT ── */
+  .about {
+    background: var(--mid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about::before {
+    content: '1945';
+    position: absolute;
+    right: -0.1em;
+    top: -0.2em;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(6rem, 30vw, 14rem);
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(200,134,10,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .stat-card {
+    border: 1px solid rgba(200,134,10,0.2);
+    border-radius: 4px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: linear-gradient(to bottom, var(--amber), var(--rust));
+  }
+
+  .stat-card:hover { border-color: rgba(200,134,10,0.5); }
+
+  .stat-card__num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 10vw, 4rem);
+    font-weight: 900;
+    color: var(--amber);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+
+  .stat-card__label {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── TIMELINE ── */
+  .timeline {
+    background: var(--dark);
+    position: relative;
+  }
+
+  .timeline__line {
+    position: absolute;
+    left: 1.5rem;
+    top: 8rem;
+    bottom: 5rem;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--amber), transparent);
+  }
+
+  .timeline__items {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    padding-left: 3.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .timeline__item {
+    position: relative;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  .timeline__item.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .timeline__item::before {
+    content: '';
+    position: absolute;
+    left: -2.3rem;
+    top: 0.3rem;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 2px solid var(--dark);
+    box-shadow: 0 0 12px rgba(200,134,10,0.5);
+  }
+
+  .timeline__year {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.4rem;
+  }
+
+  .timeline__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline__desc {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: none;
+  }
+
+  /* ── SYMBOLS ── */
+  .symbols {
+    background: var(--mid);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .symbols__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 2.5rem;
+  }
+
+  .symbol-card {
+    aspect-ratio: 1;
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: transform 0.3s;
+  }
+
+  .symbol-card:hover { transform: scale(0.98); }
+
+  .symbol-card__bg {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 5rem;
+    opacity: 0.25;
+    filter: saturate(0);
+  }
+
+  .symbol-card:nth-child(1) { background: linear-gradient(135deg, #1a1208, #2d1f00); }
+  .symbol-card:nth-child(2) { background: linear-gradient(135deg, #0a120d, #001a0d); }
+  .symbol-card:nth-child(3) { background: linear-gradient(135deg, #120a12, #1a001a); }
+  .symbol-card:nth-child(4) { background: linear-gradient(135deg, #0a0a14, #000e2a); }
+
+  .symbol-card__emoji {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+    display: block;
+    filter: drop-shadow(0 2px 8px rgba(200,134,10,0.4));
+  }
+
+  .symbol-card__name {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--cream);
+    position: relative;
+    z-index: 1;
+    line-height: 1.2;
+  }
+
+  .symbol-card__sub {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+    position: relative;
+    z-index: 1;
+    margin-top: 0.2rem;
+  }
+
+  /* ── HIGHLIGHTS ── */
+  .highlights {
+    background: var(--dark);
+  }
+
+  .highlight-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    margin-top: 2.5rem;
+    border: 1px solid rgba(200,134,10,0.15);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .hcard {
+    padding: 1.5rem;
+    background: var(--mid);
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba(200,134,10,0.08);
+    transition: background 0.3s;
+  }
+
+  .hcard:last-child { border-bottom: none; }
+  .hcard:hover { background: rgba(200,134,10,0.06); }
+
+  .hcard__icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    filter: drop-shadow(0 0 6px rgba(200,134,10,0.35));
+  }
+
+  .hcard__title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 0.4rem;
+  }
+
+  .hcard__text {
+    font-size: 0.8rem;
+    line-height: 1.7;
+    color: var(--muted);
+    max-width: none;
+  }
+
+  /* ── QUOTE ── */
+  .quote-section {
+    background: var(--amber);
+    padding: 4rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-section::before {
+    content: '❝';
+    position: absolute;
+    top: -0.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 10rem;
+    color: rgba(0,0,0,0.08);
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .quote-section blockquote {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 5vw, 2rem);
+    font-style: italic;
+    font-weight: 700;
+    color: var(--dark);
+    line-height: 1.4;
+    max-width: 560px;
+    margin: 0 auto 1.5rem;
+    position: relative;
+  }
+
+  .quote-section cite {
+    font-size: 0.7rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(14,13,10,0.6);
+    font-style: normal;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    border-top: 1px solid rgba(200,134,10,0.15);
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+
+  .footer__logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+  }
+
+  .footer__sub {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 2rem;
+  }
+
+  .footer__divider {
+    width: 60px;
+    height: 1px;
+    background: rgba(200,134,10,0.3);
+    margin: 0 auto 2rem;
+  }
+
+  .footer__copy {
+    font-size: 0.7rem;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    max-width: none;
+  }
+
+  .footer__authors {
+    font-size: 0.75rem;
+    color: rgba(245,239,224,0.5);
+    line-height: 1.8;
+    max-width: none;
+  }
+
+  .footer__authors span {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--amber);
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 1; transform: scaleY(1); }
+    50%       { opacity: 0.4; transform: scaleY(0.6); }
+  }
+
+  /* ── REVEAL ── */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(14,13,10,0);
+    transition: background 0.4s, backdrop-filter 0.4s;
+  }
+
+  nav.scrolled {
+    background: rgba(14,13,10,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,134,10,0.12);
+  }
+
+  .nav__logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--amber);
+    letter-spacing: 0.05em;
+  }
+
+  .nav__year {
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  /* ── COAT OF ARMS SVG ── */
+  .coat-hero {
+    width: clamp(110px, 32vw, 180px);
+    height: auto;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease 0.1s both;
+    filter: drop-shadow(0 0 30px rgba(200,134,10,0.25));
+  }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav__logo">Калининград</div>
+  <div class="nav__year">1946 — 2026</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero__bg"></div>
+
+  <!-- Coat of Arms Kaliningrad Oblast -->
+  <svg class="coat-hero" viewBox="0 0 200 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Shield outline / dark frame -->
+    <path d="M8 8 Q8 4 12 4 L188 4 Q192 4 192 8 L192 170 Q192 210 100 236 Q8 210 8 170 Z" fill="#2a1a14" />
+    <!-- Red field -->
+    <path d="M16 12 L184 12 L184 168 Q184 204 100 228 Q16 204 16 168 Z" fill="#CC1111"/>
+    <!-- White castle - left tower -->
+    <rect x="28" y="60" width="36" height="80" fill="white"/>
+    <!-- Left tower battlements -->
+    <rect x="28" y="52" width="8" height="14" fill="white"/>
+    <rect x="40" y="52" width="8" height="14" fill="white"/>
+    <rect x="52" y="52" width="8" height="14" fill="white"/>
+    <!-- Right tower -->
+    <rect x="136" y="60" width="36" height="80" fill="white"/>
+    <!-- Right tower battlements -->
+    <rect x="136" y="52" width="8" height="14" fill="white"/>
+    <rect x="148" y="52" width="8" height="14" fill="white"/>
+    <rect x="160" y="52" width="8" height="14" fill="white"/>
+    <!-- Centre wall -->
+    <rect x="64" y="90" width="72" height="50" fill="white"/>
+    <!-- Centre battlements -->
+    <rect x="68" y="82" width="8" height="14" fill="white"/>
+    <rect x="80" y="82" width="8" height="14" fill="white"/>
+    <rect x="92" y="82" width="8" height="14" fill="white"/>
+    <rect x="104" y="82" width="8" height="14" fill="white"/>
+    <rect x="116" y="82" width="8" height="14" fill="white"/>
+    <!-- Gate arch -->
+    <path d="M82 140 L82 116 Q82 106 100 106 Q118 106 118 116 L118 140 Z" fill="#CC1111"/>
+    <!-- Brick lines on left tower -->
+    <line x1="28" y1="72" x2="64" y2="72" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="28" y1="84" x2="64" y2="84" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="28" y1="96" x2="64" y2="96" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="28" y1="108" x2="64" y2="108" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="28" y1="120" x2="64" y2="120" stroke="#CC1111" stroke-width="1.2"/>
+    <!-- Brick lines on right tower -->
+    <line x1="136" y1="72" x2="172" y2="72" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="136" y1="84" x2="172" y2="84" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="136" y1="96" x2="172" y2="96" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="136" y1="108" x2="172" y2="108" stroke="#CC1111" stroke-width="1.2"/>
+    <line x1="136" y1="120" x2="172" y2="120" stroke="#CC1111" stroke-width="1.2"/>
+    <!-- Monogram "К" with crown (simplified) -->
+    <text x="100" y="50" text-anchor="middle" font-size="22" font-weight="bold" fill="#D4AF37" font-family="serif" font-style="italic">ℭ</text>
+    <!-- Crown above monogram -->
+    <polygon points="84,20 88,12 92,18 96,10 100,16 104,10 108,18 112,12 116,20" fill="#D4AF37"/>
+    <rect x="84" y="20" width="32" height="5" fill="#D4AF37" rx="1"/>
+    <!-- Blue wave band -->
+    <path d="M16 162 Q100 148 184 162 L184 168 Q184 204 100 228 Q16 204 16 168 Z" fill="#1144BB"/>
+    <!-- Wave crests -->
+    <path d="M16 162 Q36 155 56 162 Q76 169 96 162 Q116 155 136 162 Q156 169 176 162 Q180 161 184 162" fill="none" stroke="white" stroke-width="2"/>
+    <!-- Yellow amber circles (5) -->
+    <circle cx="38"  cy="192" r="12" fill="#F0C020"/>
+    <circle cx="61"  cy="200" r="12" fill="#F0C020"/>
+    <circle cx="85"  cy="204" r="12" fill="#F0C020"/>
+    <circle cx="115" cy="204" r="12" fill="#F0C020"/>
+    <circle cx="139" cy="200" r="12" fill="#F0C020"/>
+    <circle cx="162" cy="192" r="12" fill="#F0C020"/>
+  </svg>
+
+  <div class="hero__badge">Калининградская область</div>
+
+  <div class="hero__year">
+    80
+    <span>лет истории</span>
+  </div>
+
+  <p class="hero__subtitle">Земля янтаря, Балтийского моря<br>и неугасающего духа России</p>
+
+  <div class="hero__amber-line"></div>
+
+  <div class="hero__scroll">
+    <div class="scroll-line"></div>
+    Листать
+  </div>
+</section>
+
+<!-- AMBER STRIP -->
+<div class="amber-strip">
+  <div class="amber-strip__track">
+    <span class="amber-strip__item">1946 — Образование области <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Форт Фридрихсбург <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Балтийское море <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Янтарный комбинат <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Кант и Кёнигсберг <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Куршская коса <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">80 лет <span class="amber-strip__dot"></span></span>
+    <!-- duplicate for seamless loop -->
+    <span class="amber-strip__item">1946 — Образование области <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Форт Фридрихсбург <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Балтийское море <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Янтарный комбинат <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Кант и Кёнигсберг <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">Куршская коса <span class="amber-strip__dot"></span></span>
+    <span class="amber-strip__item">80 лет <span class="amber-strip__dot"></span></span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about">
+  <div class="about__grid">
+    <div class="reveal">
+      <div class="section-label">О регионе</div>
+      <h2>Западный форпост <em>России</em></h2>
+      <p>Калининградская область — самый западный регион Российской Федерации, анклав на берегу Балтийского моря. Образована 7 апреля 1946 года на территории бывшего Кёнигсберга. За 80 лет регион стал крупнейшим экспортёром янтаря в мире и уникальной точкой пересечения европейских и русских культурных традиций.</p>
+    </div>
+
+    <div class="reveal" style="transition-delay:0.15s">
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1rem;">
+        <div class="stat-card">
+          <div class="stat-card__num">15 K</div>
+          <div class="stat-card__label">км² площадь</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">1.1 M</div>
+          <div class="stat-card__label">жителей</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">90%</div>
+          <div class="stat-card__label">мирового янтаря</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__num">140</div>
+          <div class="stat-card__label">км береговой линии</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="timeline">
+  <div class="timeline__line"></div>
+  <div class="section-label reveal">Хроника</div>
+  <h2 class="reveal">80 лет <em>пути</em></h2>
+
+  <div class="timeline__items" style="margin-top:2.5rem;">
+    <div class="timeline__item">
+      <div class="timeline__year">1945</div>
+      <div class="timeline__title">Штурм Кёнигсберга</div>
+      <div class="timeline__desc">В апреле 1945 года советские войска взяли неприступную крепость Кёнигсберг. Город перешёл под контроль СССР после 4-дневного штурма.</div>
+    </div>
+    <div class="timeline__item">
+      <div class="timeline__year">1946</div>
+      <div class="timeline__title">Рождение области</div>
+      <div class="timeline__desc">7 апреля 1946 года образована Кёнигсбергская область, переименованная в Калининградскую. Началось переселение советских граждан.</div>
+    </div>
+    <div class="timeline__item">
+      <div class="timeline__year">1950-е</div>
+      <div class="timeline__title">Восстановление и строительство</div>
+      <div class="timeline__desc">Масштабное строительство заводов, жилых кварталов. Янтарный комбинат начал промышленную добычу балтийского золота.</div>
+    </div>
+    <div class="timeline__item">
+      <div class="timeline__year">1991</div>
+      <div class="timeline__title">Особая экономическая зона</div>
+      <div class="timeline__desc">После распада СССР область получила статус ОЭЗ, ставшей магнитом для инвестиций и международной торговли.</div>
+    </div>
+    <div class="timeline__item">
+      <div class="timeline__year">2002</div>
+      <div class="timeline__title">750 лет Кёнигсберга</div>
+      <div class="timeline__desc">Грандиозные торжества по случаю 750-летия основания Кёнигсберга привлекли внимание всего мира к богатому наследию региона.</div>
+    </div>
+    <div class="timeline__item">
+      <div class="timeline__year">2018</div>
+      <div class="timeline__title">Чемпионат мира по футболу</div>
+      <div class="timeline__desc">Калининград принял 4 матча ЧМ-2018, открыв регион миллионам болельщиков со всего мира.</div>
+    </div>
+    <div class="timeline__item">
+      <div class="timeline__year">2026</div>
+      <div class="timeline__title">80 лет — юбилей!</div>
+      <div class="timeline__desc">Калининградская область отмечает 80-летие. Регион входит в праздник с богатой историей, современной экономикой и открытым будущим.</div>
+    </div>
+  </div>
+</section>
+
+<!-- SYMBOLS -->
+<section class="symbols">
+  <div class="reveal">
+    <div class="section-label">Символы</div>
+    <h2>Лицо <em>региона</em></h2>
+  </div>
+  <div class="symbols__grid reveal" style="transition-delay:0.2s">
+    <div class="symbol-card">
+      <span class="symbol-card__emoji">🟡</span>
+      <div class="symbol-card__name">Балтийский янтарь</div>
+      <div class="symbol-card__sub">Главное богатство</div>
+    </div>
+    <div class="symbol-card">
+      <span class="symbol-card__emoji">🏰</span>
+      <div class="symbol-card__name">Кёнигсбергский замок</div>
+      <div class="symbol-card__sub">Символ истории</div>
+    </div>
+    <div class="symbol-card">
+      <span class="symbol-card__emoji">⛵</span>
+      <div class="symbol-card__name">Куршская коса</div>
+      <div class="symbol-card__sub">Наследие ЮНЕСКО</div>
+    </div>
+    <div class="symbol-card">
+      <span class="symbol-card__emoji">🌊</span>
+      <div class="symbol-card__name">Балтийское море</div>
+      <div class="symbol-card__sub">Душа региона</div>
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="highlights">
+  <div class="reveal">
+    <div class="section-label">Достижения</div>
+    <h2>Чем гордится <em>область</em></h2>
+  </div>
+  <div class="highlight-cards reveal" style="transition-delay:0.2s">
+    <div class="hcard">
+      <div class="hcard__icon">💎</div>
+      <div>
+        <div class="hcard__title">Янтарный капитал мира</div>
+        <div class="hcard__text">Калининградская область добывает около 90% мировых запасов янтаря. Уникальный «балтийский камень» экспортируется в более чем 50 стран мира.</div>
+      </div>
+    </div>
+    <div class="hcard">
+      <div class="hcard__icon">🌿</div>
+      <div>
+        <div class="hcard__title">Куршская коса — наследие ЮНЕСКО</div>
+        <div class="hcard__text">Узкий песчаный полуостров длиной 98 км включён в список Всемирного наследия ЮНЕСКО в 2000 году. Уникальная экосистема с дюнами высотой до 68 метров.</div>
+      </div>
+    </div>
+    <div class="hcard">
+      <div class="hcard__icon">🏛️</div>
+      <div>
+        <div class="hcard__title">Наследие Канта</div>
+        <div class="hcard__text">Родина великого философа Иммануила Канта, чьё имя носит Балтийский федеральный университет — один из ведущих вузов страны.</div>
+      </div>
+    </div>
+    <div class="hcard">
+      <div class="hcard__icon">⚓</div>
+      <div>
+        <div class="hcard__title">Главный рыболовный порт</div>
+        <div class="hcard__text">Калининград — один из ведущих рыболовных и судостроительных центров России с развитой портовой инфраструктурой на Балтике.</div>
+      </div>
+    </div>
+    <div class="hcard">
+      <div class="hcard__icon">⚽</div>
+      <div>
+        <div class="hcard__title">Стадион «Калининград»</div>
+        <div class="hcard__text">Современная арена на 35 000 мест, построенная к ЧМ-2018 и ставшая символом нового облика региона.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-section reveal">
+  <blockquote>
+    «Калининград — это Россия, открытая морю и истории»
+  </blockquote>
+  <cite>80 лет Калининградской области · 1946–2026</cite>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer__logo">Калининград</div>
+  <div class="footer__sub">Калининградская область</div>
+  <div class="footer__divider"></div>
+  <p class="footer__copy">© 2026 · 80 лет Калининградской области · 1946 — 2026</p>
+  <div class="footer__divider" style="margin-top:2rem;"></div>
+  <p class="footer__authors">Ходжоян Артур, Евангулов Никита<br><span>10 И · МАОУ СОШ № 58 · Калининград</span></p>
+</footer>
+
+<script>
+  // Nav scroll
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  // Intersection Observer — reveal & timeline
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal, .timeline__item').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
